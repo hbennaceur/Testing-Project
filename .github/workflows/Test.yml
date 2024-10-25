@@ -66,6 +66,7 @@ jobs:
           format: json
           scan-ref: .
           exit-code: 0
+          update-db: false
           
       - name: Run Bats Tests
         run: |

@@ -41,11 +41,11 @@ jobs:
       - name: Run Trivy vulnerability scanner in repo mode
         uses: aquasecurity/trivy-action@master
         with:
-          scan-type: 'fs'
-          #ignore-unfixed: true
+          scan-type: 'repo'
+          ignore-unfixed: true
           format: 'sarif'
           output: 'trivy-results.sarif'
-          #severity: 'CRITICAL'
+          severity: 'CRITICAL'
           skip-setup-trivy: true
                     
       - name: View Trivy Report

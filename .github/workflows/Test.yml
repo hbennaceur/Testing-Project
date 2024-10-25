@@ -43,17 +43,22 @@ jobs:
         with:
           path: .cache/trivy
           key: ${{ runner.os }}-trivy-${{ env.TRIVY_VERSION }}
-        
+      - name: Update Trivy DB
+        run: |
+          trivy --quiet image --update        
       - name: Scan Repository for Vulnerabilities
         run: |
-          trivy fs --scanners vuln,secret --exit-code 1 --severity CRITICAL,HIGH .
+          trivy fs --scanners vuln,secret --exit-code 1 --severity CRITICAL,HIGH --format json --output trivy-report.json .
         env:
           TRIVY_CACHE_DIR: .cache
           TRIVY_DISABLE_VEX_NOTICE: true
           TRIVY_DEBUG: true
-          update-db: false
-          output: trivy-report.json
           
+      - name: Upload Trivy Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: trivy-report
+          path: trivy-report.json
           
       - name: Run Bats Tests
         run: |

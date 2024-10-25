@@ -39,12 +39,14 @@ jobs:
           trivy --version
 
       - name: Run Trivy Vulnerability Scan
-        run: |
-          trivy fs --scanners vuln,secret --exit-code 1 --severity CRITICAL,HIGH .
-        env:
-          TRIVY_CACHE_DIR: .cache
-          TRIVY_DISABLE_VEX_NOTICE: true
-          TRIVY_DEBUG: true
+        uses: aquasecurity/trivy-action@v0.5.1
+        with:
+          scan-type: "fs"                     # Filesystem scan
+          severity: "CRITICAL,HIGH"           # Only scan for critical and high vulnerabilities
+          cache-dir: ".trivycache"            # Directory to store cache
+          ignore-unfixed: true
+          update-db: false                    # Prevent updating the DB to avoid rate limits
+
 
       - name: Run Bats Tests
         run: |

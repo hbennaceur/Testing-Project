@@ -28,7 +28,6 @@ jobs:
           file-clean: "false"
       - name: Execute example tests
         env:
-          BATS_LIB_PATH: ${{ steps.setup-bats.outputs.lib-path }}
           TERM: xterm    
         shell: bash
         run:

@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install Bats and Bats Libraries
-        uses: bats-core/bats-action@v2.0.0
+        uses: bats-core/bats-action@v1.6.0
 
       - name: Install Trivy
         run: |

@@ -43,17 +43,11 @@ jobs:
         with:
           scan-type: 'fs'
           ignore-unfixed: true
-          format: 'json'
-          output: 'trivy-results.json'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
           severity: 'CRITICAL'
           skip-setup-trivy: true
-          
-     # - name: Upload Trivy Report
-       # uses: actions/upload-artifact@v3
-       # with:
-         # name: trivy-report
-         # path: trivy-results.json
-          
+                    
       - name: View Trivy Report
         run: |
           cat trivy-results.json

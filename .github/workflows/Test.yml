@@ -58,6 +58,15 @@ jobs:
           TRIVY_DEBUG: true
           update-db: false
           
+      - name: Generate Trivy Vulnerability Report
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: "fs"
+          output: trivy-report.json
+          format: json
+          scan-ref: .
+          exit-code: 0
+          
       - name: Run Bats Tests
         run: |
           bats --recursive --timing --verbose-run .

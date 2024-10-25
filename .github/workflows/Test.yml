@@ -48,7 +48,7 @@ jobs:
           trivy --quiet image --update        
       - name: Scan Repository for Vulnerabilities
         run: |
-          trivy fs --scanners vuln,secret --exit-code 1 --severity CRITICAL,HIGH --format json --output trivy-report.json .
+          trivy fs --scanners vuln,secret --exit-code 1 --severity CRITICAL,HIGH --output trivy-report.json .
         env:
           TRIVY_CACHE_DIR: .cache
           TRIVY_DISABLE_VEX_NOTICE: true

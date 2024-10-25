@@ -37,18 +37,13 @@ jobs:
         run: |
           curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v${{ env.TRIVY_VERSION }}
           trivy --version
-
-     # - name: Run Trivy vulnerability scanner
-      #  uses: aquasecurity/trivy-action@0.28.0
-       # with:
-         # format: 'fs'
-         # exit-code: '1'
-          #ignore-unfixed: true
-         # vuln-type: 'os,library'
-         # severity: 'CRITICAL,HIGH'
-         # update-db: false 
-         # cache-dir: ".trivycache"  
           
+      - name: Cache Trivy DB
+        uses: actions/cache@v3
+        with:
+          path: .cache/trivy
+          key: ${{ runner.os }}-trivy-${{ env.TRIVY_VERSION }}
+        
       - name: Scan Repository for Vulnerabilities
         run: |
           trivy fs --scanners vuln,secret --exit-code 1 --severity CRITICAL,HIGH .
@@ -66,7 +61,7 @@ jobs:
           format: json
           scan-ref: .
           exit-code: 0
-          update-db: false
+
           
       - name: Run Bats Tests
         run: |

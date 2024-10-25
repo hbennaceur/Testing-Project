@@ -50,7 +50,7 @@ jobs:
                     
       - name: View Trivy Report
         run: |
-          cat trivy-results.json
+          cat trivy-results.sarif
           
       - name: Run Bats Tests
         run: |

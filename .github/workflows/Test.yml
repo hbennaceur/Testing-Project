@@ -39,7 +39,7 @@ jobs:
           trivy --version
 
       - name: Run Trivy Vulnerability Scan
-        uses: aquasecurity/trivy-action@vmain
+        uses: aquasecurity/trivy-action@main
         with:
           scan-type: "fs"                     # Filesystem scan
           severity: "CRITICAL,HIGH"           # Only scan for critical and high vulnerabilities

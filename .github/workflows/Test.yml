@@ -56,7 +56,7 @@ jobs:
           
       - name: View Trivy Report
         run: |
-          cat ./trivy-reports/trivy-results.json     
+          ls /home/runner/work/Testing-Project/Testing-Project/trivy-reports && cat /home/runner/work/Testing-Project/Testing-Project/trivy-reports/trivy-results.json     
           
       - name: Run Bats Tests
         run: |

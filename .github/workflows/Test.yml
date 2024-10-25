@@ -54,6 +54,11 @@ jobs:
           name: trivy-report
           path: trivy-results.json
           
+      - name: Download Trivy Report
+        uses: actions/download-artifact@v3
+        with:
+          name: trivy-report
+          path: ./trivy-reports          
       - name: Run Bats Tests
         run: |
           bats --recursive --timing --verbose-run .

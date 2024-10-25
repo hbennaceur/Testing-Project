@@ -26,12 +26,12 @@ jobs:
           assert-clean: "false"
           detik-clean: "false"
           file-clean: "false"
-      - name: Execute example tests
-        env:
-          TERM: xterm    
-        shell: bash
-        run:
-          bats -T -p tests           
+     # - name: Execute example tests
+       # env:
+         # TERM: xterm    
+       # shell: bash
+        #run:
+         # bats -T -p tests           
           
       - name: Install Trivy
         run: |

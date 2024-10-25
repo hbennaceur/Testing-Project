@@ -1,4 +1,4 @@
-name: Test
+name: Security and Unit Tests
 
 on:
   push:
@@ -12,20 +12,27 @@ env:
 jobs:
   test:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - name: Setup Bats and bats libs
-        uses: bats-core/bats-action@2.0.0
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install Bats and Bats Libraries
+        uses: bats-core/bats-action@v2.0.0
 
       - name: Install Trivy
         run: |
           curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v${{ env.TRIVY_VERSION }}
           trivy --version
 
-      - name: Test
-        run: bats --recursive --timing --verbose-run .
+      - name: Run Trivy Vulnerability Scan
+        run: |
+          trivy fs --scanners vuln,secret --exit-code 1 --severity CRITICAL,HIGH .
         env:
           TRIVY_CACHE_DIR: .cache
           TRIVY_DISABLE_VEX_NOTICE: true
           TRIVY_DEBUG: true
+
+      - name: Run Bats Tests
+        run: |
+          bats --recursive --timing --verbose-run .

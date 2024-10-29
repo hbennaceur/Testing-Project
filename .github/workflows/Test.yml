@@ -33,18 +33,45 @@ jobs:
           keyvault: keyvaultapplication
           secrets: secret1, secret2
           
-      - name: Update .env file
-        run: |
-          echo "Updating .env file..."
+To ensure that your .env file is updated with the secret values from GitHub Actions and successfully deployed, follow these steps carefully. This will include setting up your workflow, ensuring secrets are accessible, and validating the update.
+Step 1: GitHub Actions Workflow Setup
+
+Here's an example of a complete GitHub Actions workflow that updates the .env file and uses the secrets correctly.
+
+yaml
+
+name: Update .env File and Deploy
+
+on:
+  push:
+    branches:
+      - main  # Change this to your main branch if necessary
+
+jobs:
+  update-env-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Update .env file
+      run: |
+        echo "Updating .env file..."
         
-          # Update secret1 with AZURE_CLIENT_ID
+        if [[ -f backend/.env ]]; then
+          echo "Found .env file, updating..."
+                    
           sed -i "s/^secret1=changeme/secret1=${{ secrets.AZURE_CLIENT_ID }}/" backend/.env
-        
-          # Update secret2 with AZURE_CLIENT_SECRET
+                    
           sed -i "s/^secret2=changeme/secret2=${{ secrets.AZURE_CLIENT_SECRET }}/" backend/.env
-        
-          # Optional: Display the contents of the .env file after the update
+                    
+          echo "Updated .env content:"
           cat backend/.env
+        else
+          echo ".env file not found!"
+          exit 1
+        fi
       - name: Checkout Code
         uses: actions/checkout@v4
 

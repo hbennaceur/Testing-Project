@@ -32,7 +32,23 @@ jobs:
        # shell: bash
         #run:
          # bats -T -p tests           
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+
+      - name: Fetch secret from Azure Key Vault
+        id: get-secret
+        uses: azure/get-keyvault-secrets@v1
+        with:
+          keyvault: keyvaultapplication
+          secrets: secret1
           
+      - name: Use the secret
+        run: echo "Secret is ${{ steps.get-secret.outputs.secret1 }}" 
+        
       - name: Install Trivy
         run: |
           curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v${{ env.TRIVY_VERSION }}

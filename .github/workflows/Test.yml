@@ -37,7 +37,9 @@ jobs:
           echo "SECRET1=${{ steps.get-secrets.outputs.secret1 }}" >> .env
           echo "SECRET2=${{ steps.get-secrets.outputs.secret2 }}" >> .env
           cat .env  # Optional: Check the contents of the .env file
-          
+      - name: copy .env
+        run: |
+          cp .env /home/ubuntu
       - name: Checkout Code
         uses: actions/checkout@v4
 

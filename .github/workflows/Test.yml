@@ -17,6 +17,12 @@ jobs:
     runs-on: ubuntu-runner
 
     steps:
+      - shell: bash
+        env:
+          SUPER_SECRET: ${{ secrets.AZURE_CREDENTIALS }}
+        run: |
+          cat "$secrets.AZURE_CREDENTIALS"  
+          
       - name: Login to Azure
         uses: azure/login@v1
         with:

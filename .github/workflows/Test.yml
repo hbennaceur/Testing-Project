@@ -37,7 +37,7 @@ jobs:
           echo "Updating .env file..."
           sed -i "s/^secret1=.*/secret1=${{ secrets.AZURE_CLIENT_ID }}/" backend/.env
           sed -i "s/^secret2=.*/secret2=${{ secrets.AZURE_CLIENT_SECRET }}/" backend/.env
-          
+          cat backend/.env
       - name: Checkout Code
         uses: actions/checkout@v4
 

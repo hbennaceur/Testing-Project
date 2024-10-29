@@ -35,8 +35,14 @@ jobs:
       - name: Update .env file
         run: |
           echo "Updating .env file..."
-          sed -i "s/^secret1=.*/secret1=${{ secrets.AZURE_CLIENT_ID }}/" backend/.env
-          sed -i "s/^secret2=.*/secret2=${{ secrets.AZURE_CLIENT_SECRET }}/" backend/.env
+        
+          # Update secret1 with AZURE_CLIENT_ID
+          sed -i "s/^secret1=changeme/secret1=${{ secrets.AZURE_CLIENT_ID }}/" backend/.env
+        
+          # Update secret2 with AZURE_CLIENT_SECRET
+          sed -i "s/^secret2=changeme/secret2=${{ secrets.AZURE_CLIENT_SECRET }}/" backend/.env
+        
+          # Optional: Display the contents of the .env file after the update
           cat backend/.env
       - name: Checkout Code
         uses: actions/checkout@v4

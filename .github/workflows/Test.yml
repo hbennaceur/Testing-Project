@@ -25,6 +25,7 @@ jobs:
           #client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
           #subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+          
       - name: Fetch secret from Azure Key Vault
         id: get-secret
         uses: azure/get-keyvault-secrets@v1

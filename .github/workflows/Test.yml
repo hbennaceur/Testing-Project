@@ -4,6 +4,9 @@ on:
   push:
   pull_request:
   workflow_dispatch:
+permissions:
+  id-token: write
+  contents: read
 
 env:
   TRIVY_VERSION: 0.56.1
@@ -14,6 +17,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          #client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          #tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          #client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+          #subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Fetch secret from Azure Key Vault
+        id: get-secret
+        uses: azure/get-keyvault-secrets@v1
+        with:
+          keyvault: keyvaultapplication
+          secrets: secret1
+          
+      - name: Use the secret
+        run: echo "Secret is ${{ steps.get-secret.outputs.secret1 }}" 
       - name: Checkout Code
         uses: actions/checkout@v4
 
@@ -32,23 +52,7 @@ jobs:
        # shell: bash
         #run:
          # bats -T -p tests           
-      - name: Login to Azure
-        uses: azure/login@v1
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          
-      - name: Fetch secret from Azure Key Vault
-        id: get-secret
-        uses: azure/get-keyvault-secrets@v1
-        with:
-          keyvault: keyvaultapplication
-          secrets: secret1
-          
-      - name: Use the secret
-        run: echo "Secret is ${{ steps.get-secret.outputs.secret1 }}" 
+
         
       - name: Install Trivy
         run: |

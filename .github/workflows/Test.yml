@@ -51,6 +51,15 @@ jobs:
             echo ".env file not found!"
             exit 1
           fi
+      - name: Commit changes
+        run: |
+          git config --local user.email "hbennaceur@mobelite.fr"  # Replace with your email
+          git config --local user.name "hbennaceur"  # Replace with your name
+          git add backend/.env
+          git commit -m "Update .env file with secrets" || echo "No changes to commit"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Automatically provided by GitHub
       - name: Checkout Code
         uses: actions/checkout@v4
 

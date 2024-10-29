@@ -32,14 +32,12 @@ jobs:
           keyvault: keyvaultapplication
           secrets: secret1, secret2
           
-      - name: Create .env file
+      - name: Update .env file
         run: |
-          echo "SECRET1=${{ steps.get-secrets.outputs.secret1 }}" >> .env
-          echo "SECRET2=${{ steps.get-secrets.outputs.secret2 }}" >> .env
-          cat .env  # Optional: Check the contents of the .env file
-      - name: copy .env
-        run: |
-          cp .env /home/ubuntu
+          echo "Updating .env file..."
+          sed -i "s/^secret1=.*/secret1=${{ secrets.AZURE_CLIENT_ID }}/" backend/.env
+          sed -i "s/^secret2=.*/secret2=${{ secrets.AZURE_CLIENT_SECRET }}/" backend/.env
+          
       - name: Checkout Code
         uses: actions/checkout@v4
 

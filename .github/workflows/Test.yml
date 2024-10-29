@@ -14,7 +14,7 @@ env:
 
 jobs:
   Security_and_Tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-runner
 
     steps:
       - name: Login to Azure

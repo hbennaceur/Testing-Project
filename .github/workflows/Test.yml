@@ -30,10 +30,14 @@ jobs:
         uses: azure/get-keyvault-secrets@v1
         with:
           keyvault: keyvaultapplication
-          secrets: secret1
+          secrets: secret1, secret2
           
-      - name: Use the secret
-        run: echo "Secret is ${{ steps.get-secret.outputs.secret1 }}" 
+      - name: Create .env file
+        run: |
+          echo "SECRET1=${{ steps.get-secrets.outputs.secret1 }}" >> .env
+          echo "SECRET2=${{ steps.get-secrets.outputs.secret2 }}" >> .env
+          cat .env  # Optional: Check the contents of the .env file
+          
       - name: Checkout Code
         uses: actions/checkout@v4
 

@@ -41,9 +41,9 @@ jobs:
           if [[ -f backend/.env ]]; then
             echo "Found .env file, updating..."
                     
-            sed -i "s/^secret1=changeme/secret1=${{ secrets.AZURE_CLIENT_ID }}/" backend/.env
+            sed -i "s/^secret1=changeme/secret1=test1/" backend/.env
                     
-            sed -i "s/^secret2=changeme/secret2=${{ secrets.AZURE_CLIENT_SECRET }}/" backend/.env
+            sed -i "s/^secret2=changeme/secret2=test2/" backend/.env
                     
             echo "Updated .env content:"
             cat backend/.env

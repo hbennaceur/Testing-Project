@@ -2,8 +2,6 @@ name: Security and Unit Tests
 
 on:
   push:
-  pull_request:
-  workflow_dispatch:
 permissions:
   id-token: write
   contents: read
@@ -14,7 +12,7 @@ env:
 
 jobs:
   Security_and_Tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-runner
     outputs:
       image_tag: ${{ steps.vars.outputs.image_tag }}
     steps: 

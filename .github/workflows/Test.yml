@@ -12,7 +12,7 @@ env:
 
 jobs:
   Security_and_Tests:
-    runs-on: ubuntu-runner
+    runs-on: ubuntu-latest
     outputs:
       image_tag: ${{ steps.vars.outputs.image_tag }}
     steps: 
